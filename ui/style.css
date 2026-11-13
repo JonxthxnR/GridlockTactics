@@ -1,0 +1,161 @@
+:root {
+    --fondo-oscuro: #121212;
+    --texto-terminal: #c8c8c8;
+    
+    /* Paleta Krieg / Grimdark */
+    --terreno-libre: #3b3530;
+    --terreno-trinchera: #1a1817;
+    --terreno-obstaculo: #5c605a;
+    
+    --espacio-grilla: 2px;
+    --tamano-celda: 60px;
+}
+
+body {
+    background-color: var(--fondo-oscuro);
+    color: var(--texto-terminal);
+    font-family: monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+    border-bottom: 1px solid var(--texto-terminal);
+    padding-bottom: 10px;
+}
+
+.contenedor-tablero {
+    display: grid;
+    gap: var(--espacio-grilla);
+    background-color: #000;
+    border: 4px solid #2a2a2a;
+    padding: var(--espacio-grilla);
+    margin-top: 20px;
+}
+
+.casilla {
+    width: var(--tamano-celda);
+    height: var(--tamano-celda);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    user-select: none;
+}
+
+/* Clases dinámicas inyectadas por JS */
+.casilla-libre { background-color: var(--terreno-libre); }
+.casilla-trinchera { 
+    background-color: var(--terreno-trinchera);
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+}
+.casilla-obstaculo { 
+    background-color: var(--terreno-obstaculo);
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(0,0,0,0.2) 10px, rgba(0,0,0,0.2) 20px);
+}
+.panel-metricas {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #1a1817;
+    border: 2px solid #3b3530;
+    width: 480px;
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+
+.panel-metricas h3 {
+    margin: 0 0 10px 0;
+    color: #dfdfdf;
+    border-bottom: 1px solid #3b3530;
+    padding-bottom: 5px;
+    letter-spacing: 1px;
+}
+.contenedor-principal {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+.panel-controles {
+    background-color: #1a1817;
+    border: 2px solid #3b3530;
+    padding: 15px;
+    width: 260px;
+}
+
+.panel-controles h3 {
+    margin-top: 0;
+    font-size: 0.9rem;
+    color: #dfdfdf;
+    border-bottom: 1px solid #3b3530;
+    padding-bottom: 5px;
+}
+
+.grupo-control {
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 0.8rem;
+}
+
+.grupo-control input {
+    background-color: #121212;
+    border: 1px solid #5c605a;
+    color: #c8c8c8;
+    padding: 6px;
+    font-family: monospace;
+}
+
+.btn-tactico {
+    width: 100%;
+    background-color: #3b3530;
+    color: #fff;
+    border: 1px solid #5c605a;
+    padding: 10px;
+    cursor: pointer;
+    font-family: monospace;
+    font-weight: bold;
+    margin-top: 5px;
+    transition: background 0.2s;
+}
+
+.btn-tactico:hover {
+    background-color: #5c605a;
+    color: #00ffcc;
+}
+
+/* Indicador visual de unidad sobre la celda */
+.casilla {
+    position: relative;
+}
+
+.unidad-ficha {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.unidad-ia {
+    background-color: #8b0000; /* Rojo Krieg / Enemigo */
+    color: #ffcccc;
+    border: 2px solid #ff4444;
+}
+
+.unidad-jugador {
+    background-color: #004d40; /* Verde oscuro / Aliado */
+    color: #a7ffeb;
+    border: 2px solid #00ffcc;
+}

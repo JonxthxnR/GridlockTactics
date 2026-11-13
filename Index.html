@@ -3,439 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gridlock Tactics: Trench Korps - Menú Principal</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600;700&family=Roboto+Condensed:wght@400;700&display=swap');
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            user-select: none;
-        }
-
-        body {
-            background-color: #121110;
-            color: #d2c8b8;
-            font-family: 'Roboto Condensed', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .main-container {
-            width: 100%;
-            max-width: 840px;
-            background: #23211f;
-            border: 4px solid #141312;
-            box-shadow: 0 0 35px rgba(0,0,0,0.9), inset 0 0 15px rgba(0,0,0,0.6);
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            position: relative;
-        }
-
-        /* PANELES DE CHAPA METÁLICA CON REMACHES */
-        .metal-panel {
-            background: linear-gradient(180deg, #37332f 0%, #2a2724 100%);
-            border: 2px solid #181716;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.12), 0 4px 12px rgba(0,0,0,0.7);
-            position: relative;
-            padding: 16px;
-        }
-
-        /* REMACHES EN LAS ESQUINAS Y BORDES */
-        .rivet {
-            position: absolute;
-            width: 7px;
-            height: 7px;
-            background: radial-gradient(circle at 30% 30%, #7d756a, #1a1917);
-            border-radius: 50%;
-            border: 1px solid #100f0e;
-            box-shadow: inset 0 1px 1px rgba(255,255,255,0.4);
-        }
-        .rivet.tl { top: 6px; left: 6px; }
-        .rivet.tr { top: 6px; right: 6px; }
-        .rivet.bl { bottom: 6px; left: 6px; }
-        .rivet.br { bottom: 6px; right: 6px; }
-        .rivet.tc { top: 6px; left: 50%; transform: translateX(-50%); }
-        .rivet.bc { bottom: 6px; left: 50%; transform: translateX(-50%); }
-
-        /* PANEL SUPERIOR: MENÚ Y TÍTULO */
-        .header-banner {
-            background: linear-gradient(180deg, #443f3a 0%, #302d29 100%);
-            border: 2px solid #181716;
-            text-align: center;
-            padding: 14px 10px;
-            margin-bottom: 12px;
-            box-shadow: inset 0 1px 0 rgba(255,255,255,0.15);
-            position: relative;
-        }
-
-        .header-title {
-            font-family: 'Oswald', sans-serif;
-            font-size: 2.1rem;
-            font-weight: 700;
-            color: #d6cebf;
-            letter-spacing: 2px;
-            line-height: 1.15;
-            text-transform: uppercase;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.9);
-        }
-
-        .menu-list {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 0 10px 0;
-        }
-
-        .skull-divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 8px;
-            color: #a39989;
-            font-size: 1.3rem;
-        }
-
-        .skull-line {
-            width: 45px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #887e6f, transparent);
-        }
-
-        .menu-item {
-            font-family: 'Oswald', sans-serif;
-            font-size: 1.35rem;
-            color: #c4bba9;
-            cursor: pointer;
-            letter-spacing: 1px;
-            transition: all 0.15s ease;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.9);
-            padding: 2px 14px;
-        }
-
-        .menu-item:hover {
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(229, 142, 38, 0.7);
-            transform: scale(1.03);
-        }
-
-        /* ETIQUETA SUPERIOR DEL PANEL DE ABAJO */
-        .panel-label {
-            position: absolute;
-            top: -18px;
-            left: 2px;
-            font-size: 0.7rem;
-            color: #6b6357;
-            letter-spacing: 0.5px;
-        }
-
-        /* PANEL INFERIOR: CONFIGURACIÓN */
-        .settings-box {
-            background: linear-gradient(180deg, #2d2a27 0%, #22201d 100%);
-            padding: 14px 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            position: relative;
-        }
-
-        /* SLIDER DE CUADRÍCULA */
-        .slider-group {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            margin-bottom: 4px;
-        }
-
-        .slider-title {
-            font-size: 0.82rem;
-            color: #8e8476;
-        }
-
-        .slider-title span {
-            color: #e58e26;
-            font-weight: bold;
-        }
-
-        .range-slider {
-            width: 100%;
-            height: 7px;
-            background: #121110;
-            border: 1px solid #36322e;
-            appearance: none;
-            outline: none;
-        }
-
-        .range-slider::-webkit-slider-thumb {
-            appearance: none;
-            width: 12px;
-            height: 18px;
-            background: linear-gradient(180deg, #888073 0%, #46413a 100%);
-            border: 1px solid #111;
-            cursor: pointer;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.8);
-        }
-
-        /* FILAS DE CONTROLES (GRID 2 COLUMNAS) */
-        .controls-grid {
-            display: grid;
-            grid-template-columns: 280px 1fr;
-            gap: 8px 30px;
-            align-items: center;
-        }
-
-        .field-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .field-label {
-            font-size: 0.8rem;
-            color: #8e8476;
-        }
-
-        .custom-select {
-            background: #141312;
-            border: 1px solid #38342f;
-            color: #e58e26;
-            font-family: 'Roboto Condensed', sans-serif;
-            font-size: 0.8rem;
-            font-weight: bold;
-            padding: 3px 6px;
-            width: 160px;
-            outline: none;
-            cursor: pointer;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
-        }
-
-        /* CONMUTADORES (TOGGLES) */
-        .toggles-group {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
-        .toggle-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .toggle-label {
-            font-size: 0.8rem;
-            color: #8e8476;
-        }
-
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 38px;
-            height: 16px;
-            background: #121110;
-            border: 1px solid #36322e;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
-            cursor: pointer;
-        }
-
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider-knob {
-            position: absolute;
-            top: 1px;
-            left: 1px;
-            width: 14px;
-            height: 12px;
-            background: #544e45;
-            border: 1px solid #1a1917;
-            transition: transform 0.15s ease;
-        }
-
-        .switch input:checked + .slider-knob {
-            transform: translateX(20px);
-            background: #e58e26;
-            box-shadow: 0 0 6px rgba(229, 142, 38, 0.8);
-        }
-
-        /* BOTONES APLICAR Y RESETEAR */
-        .actions-row {
-            display: flex;
-            gap: 8px;
-            margin-top: 6px;
-        }
-
-        .btn-metal {
-            background: linear-gradient(180deg, #443f39 0%, #302c28 100%);
-            border: 1px solid #161514;
-            color: #bfa593;
-            font-family: 'Roboto Condensed', sans-serif;
-            font-size: 0.78rem;
-            font-weight: bold;
-            padding: 5px 16px;
-            cursor: pointer;
-            letter-spacing: 0.5px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.1);
-            text-transform: uppercase;
-        }
-
-        .btn-metal:hover {
-            background: linear-gradient(180deg, #544e46 0%, #3b3732 100%);
-            color: #ffffff;
-        }
-
-        .btn-metal:active {
-            transform: translateY(1px);
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.8);
-        }
-    </style>
+    <title>Gridlock Tactics: Trench Korps - Sandbox IA</title>
+    <link rel="stylesheet" href="ui/style.css">
 </head>
 <body>
-
-<div class="main-container">
+    <header>
+        <h1>BATTLE AI: LABORATORIO TÁCTICO (SANDBOX)</h1>
+    </header>
     
-    <!-- PANEL SUPERIOR: MENÚ -->
-    <div class="metal-panel">
-        <div class="rivet tl"></div>
-        <div class="rivet tr"></div>
-        <div class="rivet bl"></div>
-        <div class="rivet br"></div>
-        <div class="rivet tc"></div>
-        <div class="rivet bc"></div>
-
-        <div class="header-banner">
-            <div class="rivet tl"></div>
-            <div class="rivet tr"></div>
-            <div class="rivet bl"></div>
-            <div class="rivet br"></div>
-            
-            <div class="header-title">GRIDLOCK TACTICS:<br>TRENCH KORPS</div>
-        </div>
-
-        <div class="skull-divider">
-            <div class="skull-line"></div>
-            <span>☠</span>
-            <div class="skull-line"></div>
-        </div>
-
-        <div class="menu-list">
-          <div class="menu-item" onclick="window.location.href='pruebas.html'">Iniciar Campaña</div>
-          <div class="menu-item" onclick="window.location.href='pruebas.html'">Configuración de Dificultad</div>
-          <div class="menu-item" onclick="window.location.href='resultados.html'">Métricas / Telemetría</div>
-          <div class="menu-item" onclick="window.location.href='index.html'">Salir</div>
-        </div>
-    </div>
-
-    <!-- PANEL INFERIOR: CONTROLES Y PARÁMETROS -->
-    <div style="position: relative;">
-        <div class="panel-label">Panel Principal</div>
-        <div class="metal-panel settings-box">
-            <div class="rivet tl"></div>
-            <div class="rivet tr"></div>
-            <div class="rivet bl"></div>
-            <div class="rivet br"></div>
-            <div class="rivet tc"></div>
-            <div class="rivet bc"></div>
-
-            <!-- SLIDER DE TAMAÑO -->
-            <div class="slider-group">
-                <div class="slider-title">tamaño de cuadrícula <span id="grid-val">8x8</span></div>
-                <input type="range" class="range-slider" min="4" max="16" value="8" step="2" oninput="updateGrid(this.value)">
+    <main class="contenedor-principal">
+        <!-- Panel de Control para alterar estadísticas y pesos en vivo -->
+        <aside class="panel-controles">
+            <h3>[PARÁMETROS TÁCTICOS]</h3>
+            <div class="grupo-control">
+                <label>HP Soldado IA:</label>
+                <input type="number" id="input-hp-ia" value="10" min="1" max="20">
+            </div>
+            <div class="grupo-control">
+                <label>HP Soldado Jugador:</label>
+                <input type="number" id="input-hp-jugador" value="10" min="1" max="20">
+            </div>
+            <div class="grupo-control">
+                <label>Profundidad Minimax (d):</label>
+                <input type="number" id="input-profundidad" value="2" min="1" max="4">
             </div>
 
-            <!-- FILAS DE CONTROLES -->
-            <div class="controls-grid">
-                <!-- Fila 1 -->
-                <div class="field-row">
-                    <span class="field-label">Algoritmo:</span>
-                    <select class="custom-select">
-                        <option>HEURISTIC / A*</option>
-                        <option>MINIMAX PURE</option>
-                        <option>ALPHA-BETA</option>
-                    </select>
-                </div>
-                <div class="toggles-group">
-                    <div class="toggle-item">
-                        <span class="toggle-label">Mostrar camino</span>
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider-knob"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Fila 2 -->
-                <div class="field-row">
-                    <span class="field-label">Dificultad:</span>
-                    <select class="custom-select">
-                        <option>GRIM</option>
-                        <option>TACTICAL</option>
-                        <option>BRUTAL</option>
-                    </select>
-                </div>
-                <div class="toggles-group">
-                    <div class="toggle-item">
-                        <span class="toggle-label">Niebla</span>
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider-knob"></span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Fila 3 -->
-                <div class="field-row">
-                    <span class="field-label">Ejecución:</span>
-                    <select class="custom-select">
-                        <option>STEP-BY-STEP (50ms)</option>
-                        <option>INSTANT (0ms)</option>
-                        <option>SLOW (100ms)</option>
-                    </select>
-                </div>
-                <div class="toggles-group">
-                    <div class="toggle-item">
-                        <span class="toggle-label">SFX</span>
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider-knob"></span>
-                        </label>
-                    </div>
-                    <div class="toggle-item">
-                        <span class="toggle-label">DEBUG</span>
-                        <label class="switch">
-                            <input type="checkbox" checked>
-                            <span class="slider-knob"></span>
-                        </label>
-                    </div>
-                </div>
+            <h3>[PESOS HEURÍSTICOS]</h3>
+            <div class="grupo-control">
+                <label>Peso w1 (HP IA):</label>
+                <input type="number" id="input-w1" value="1.0" step="0.1">
+            </div>
+            <div class="grupo-control">
+                <label>Peso w2 (HP Jugador):</label>
+                <input type="number" id="input-w2" value="1.0" step="0.1">
+            </div>
+            <div class="grupo-control">
+                <label>Peso w3 (Cobertura):</label>
+                <input type="number" id="input-w3" value="0.5" step="0.1">
+            </div>
+            <div class="grupo-control">
+                <label>Peso w4 (Amenaza):</label>
+                <input type="number" id="input-w4" value="1.5" step="0.1">
             </div>
 
-            <!-- BOTONES -->
-            <div class="actions-row">
-                <button class="btn-metal">APLICAR</button>
-                <button class="btn-metal">RESETEAR</button>
-            </div>
-        </div>
-    </div>
+            <button id="btn-calcular" class="btn-tactico">EJECUTAR MINIMAX</button>
+        </aside>
 
-</div>
+        <!-- Tablero Visual -->
+        <section>
+            <div id="tablero-juego" class="contenedor-tablero"></div>
+        </section>
+    </main>
 
-<script>
-    function updateGrid(val) {
-        document.getElementById('grid-val').innerText = val + 'x' + val;
-    }
-</script>
+    <!-- Panel de Resultados del Minimax -->
+    <section id="panel-metricas" class="panel-metricas">
+        <h3>[DIAGNÓSTICO DEL ÁRBOL DE DECISIONES]</h3>
+        <p>Modifica los parámetros y presiona "Ejecutar Minimax".</p>
+    </section>
 
+    <script type="module" src="main.js"></script>
 </body>
 </html>

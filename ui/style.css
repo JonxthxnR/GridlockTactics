@@ -498,3 +498,49 @@ h1 {
     font-size: 0.72rem;
     color: #bbb;
 }
+
+/* =========================================================
+   8. DISEÑO RESPONSIVE Y ADAPTACIÓN MÓVIL
+   ========================================================= */
+
+@media (max-width: 900px) {
+    .contenedor-principal {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+    }
+
+    .panel-controles {
+        width: 100%;
+        max-width: 520px;
+        box-sizing: border-box;
+    }
+
+    .panel-metricas,
+    .panel-postpartida {
+        width: 100% !important;
+        max-width: 520px !important;
+        box-sizing: border-box;
+    }
+
+    .cabecera-imperial {
+        max-width: 100%;
+    }
+}
+
+/* Permitir que el tablero escale dinámicamente en pantallas pequeñas si fuera necesario */
+@media (max-width: 600px) {
+    :root {
+        --tamano-celda: 45px; /* Achica un poco las celdas en móviles para que quepa el 8x8 */
+    }
+
+    .unidad-ficha {
+        width: 36px;
+        height: 36px;
+        font-size: 0.55rem;
+    }
+
+    .unidad-simbolo {
+        font-size: 0.75rem;
+    }
+}

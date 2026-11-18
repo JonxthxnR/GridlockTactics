@@ -48,7 +48,7 @@ function limpiarSeleccion() {
     casillasMovimiento = [];
     objetivosAtaque = [];
     lineaMira = [];
-    document.getElementById('info-unidad').textContent = 'Selecciona una unidad verde [F: Fusilero | T: Tirador | G: Granadero].';
+    document.getElementById('info-unidad').textContent = 'Selecciona una unidad verde [FSL: Fusilero | TDR: Tirador | GRN: Granadero].';
 }
 
 function finalizarPartidaYMostrarGrafica() {

@@ -57,21 +57,49 @@ export class RenderizarTablero {
                     divCasilla.classList.add('efecto-impacto');
                 }
 
+                // Renderizar ficha de unidad
                 if (casillaLogica.unidad) {
+                    const u = casillaLogica.unidad;
                     const ficha = document.createElement('div');
                     ficha.classList.add('unidad-ficha');
-                    const letra = siglasClase[casillaLogica.unidad.clase] || 'F';
                     
-                    if (casillaLogica.unidad.faccion === 'IA') {
+                    // Configurar visuales por clase tipo Krieg
+                    let icono = '⚔';
+                    let sigla = 'FSL';
+                    if (u.clase === 'TIRADOR') {
+                        icono = '⌖';
+                        sigla = 'TDR';
+                    } else if (u.clase === 'GRANADERO') {
+                        icono = '☠'; // Calavera imperial para los Breachers
+                        sigla = 'GRN';
+                    }
+
+                    // Identificar facción para las barras y clases
+                    const esIA = u.faccion === 'IA';
+                    if (esIA) {
                         ficha.classList.add('unidad-ia');
-                        ficha.textContent = `${letra}:${casillaLogica.unidad.hpActual}`;
                     } else {
                         ficha.classList.add('unidad-jugador');
-                        ficha.textContent = `${letra}:${casillaLogica.unidad.hpActual}`;
-                        if (casillaLogica.unidad.pmActual <= 0) {
-                            ficha.style.opacity = '0.5';
+                        if (u.pmActual <= 0) {
+                            ficha.style.opacity = '0.45';
                         }
                     }
+
+                    // Calcular el % de vida restante para la micro-barra de vida
+                    const porcentajeHP = Math.max(0, (u.hpActual / u.hpMax) * 100);
+
+                    // Estructurar la placa de asedio
+                    ficha.innerHTML = `
+                        <span class="unidad-clase-nombre">${sigla}</span>
+                        <span class="unidad-simbolo">${icono}</span>
+                        <div class="hud-vida">
+                            <div class="hud-vida-barra" style="width: ${porcentajeHP}%;"></div>
+                        </div>
+                    `;
+
+                    // Tooltip táctico flotante en miniatura (mouse hover)
+                    ficha.title = `[KRIEG ${u.faccion}] ${u.clase} - HP: ${u.hpActual}/${u.hpMax}`;
+
                     divCasilla.appendChild(ficha);
                 }
 

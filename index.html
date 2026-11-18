@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="ui/style.css">
 </head>
 <body>
-    <header>
+    <header class="cabecera-imperial">
+        <div class="subtitulo-imperio">++ COGITADOR TÁCTICO DE ASEDIO // SECTOR KRIEG-88 ++</div>
         <h1>GRIDLOCK TACTICS: TRENCH KORPS</h1>
     </header>
     
@@ -15,13 +16,17 @@
         <!-- Panel de Control de Partida y Parámetros IA -->
         <aside class="panel-controles">
             <h3>[ESTADO DE BATALLA]</h3>
-            <p id="indicador-turno" style="color: #00ffcc; font-weight: bold;">TURNO: JUGADOR</p>
-            <p id="info-unidad" style="font-size: 0.78rem; color: #aaa;">Selecciona una unidad verde [F: Fusilero | T: Tirador | G: Granadero].</p>
+            <div class="visor-turno">
+                <p id="indicador-turno">TURNO: JUGADOR</p>
+            </div>
+            <div class="visor-telemetria-unidad">
+                <p id="info-unidad">Selecciona una unidad verde [FSL | TDR | GRN].</p>
+            </div>
             
             <button id="btn-fin-turno" class="btn-tactico btn-fin-turno">FINALIZAR TURNO</button>
             <button id="btn-reiniciar" class="btn-tactico">REINICIAR ESCARAMUZA</button>
 
-            <h3 style="margin-top: 18px;">[CONFIGURACIÓN IA]</h3>
+            <h3 style="margin-top: 20px;">[PARÁMETROS COGITADOR IA]</h3>
             <div class="grupo-control">
                 <label>Profundidad Búsqueda (d):</label>
                 <input type="number" id="input-profundidad" value="2" min="1" max="3">
@@ -61,4 +66,4 @@
 
     <script type="module" src="main.js"></script>
 </body>
-</html>
+</html> 

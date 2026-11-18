@@ -1,15 +1,25 @@
 export class Unidad {
-    constructor(id, faccion, hp, ap, rango, dano) {
-        this.id = id;             // Identificador único (ej. 'soldado-1')
-        this.faccion = faccion;   // 'JUGADOR' o 'IA'
+    constructor(id, faccion, hp, pm, rango, dano, clase = 'FUSILERO') {
+        this.id = id;
+        this.faccion = faccion; // 'JUGADOR' o 'IA'
+        this.clase = clase;     // 'FUSILERO' | 'TIRADOR' | 'GRANADERO'
         
-        // Atributos biológicos y de combate
         this.hpMax = hp;
         this.hpActual = hp;
-        this.apMax = ap;
-        this.apActual = ap;
-        this.rango = rango;       // Alcance del arma
-        this.dano = dano;         // Daño plano que inflige
+        this.pmMax = pm;
+        this.pmActual = pm;
+        this.rango = rango;
+        this.dano = dano;
+    }
+
+    static crearPorClase(id, faccion, clase) {
+        const plantillas = {
+            FUSILERO:  { hp: 10, pm: 3, rango: 4, dano: 4 },
+            TIRADOR:   { hp: 7,  pm: 2, rango: 7, dano: 6 },
+            GRANADERO: { hp: 12, pm: 4, rango: 2, dano: 7 }
+        };
+        const stats = plantillas[clase] || plantillas.FUSILERO;
+        return new Unidad(id, faccion, stats.hp, stats.pm, stats.rango, stats.dano, clase);
     }
 
     estaViva() {
@@ -17,31 +27,31 @@ export class Unidad {
     }
 
     recibirDano(cantidad, reduccionCobertura = 0) {
-        // El daño final no puede ser negativo
-        const danoFinal = Math.max(0, cantidad - reduccionCobertura);
+        // El Granadero ignora la mitad de la cobertura de trinchera (perforación de asalto)
+        const coberturaEfectiva = this.clase === 'GRANADERO'
+            ? Math.floor(reduccionCobertura / 2)
+            : reduccionCobertura;
+        const danoFinal = Math.max(0, cantidad - coberturaEfectiva);
         this.hpActual = Math.max(0, this.hpActual - danoFinal);
+        return danoFinal;
     }
 
-    restaurarAP() {
-        this.apActual = this.apMax;
+    restaurarPM() {
+        this.pmActual = this.pmMax;
     }
 
-    /**
-     * Clonación profunda para el árbol Minimax.
-     */
     clonar() {
         const nuevaUnidad = new Unidad(
             this.id, 
             this.faccion, 
             this.hpMax, 
-            this.apMax, 
+            this.pmMax, 
             this.rango, 
-            this.dano
+            this.dano,
+            this.clase
         );
-        // Respetamos el estado actual de la unidad en la simulación
         nuevaUnidad.hpActual = this.hpActual;
-        nuevaUnidad.apActual = this.apActual;
-        
+        nuevaUnidad.pmActual = this.pmActual;
         return nuevaUnidad;
     }
 }

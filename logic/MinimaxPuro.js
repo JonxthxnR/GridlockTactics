@@ -3,7 +3,10 @@ export class Minimax {
         this.profundidadMaxima = profundidadMaxima;
         this.nodosEvaluados = 0;
         this.pesos = pesosPersonalizados || {
-            w1: 1.0, w2: 1.0, w3: 0.5, w4: 1.5
+            P1: 1.0,
+            P2: 1.0,
+            P3: 0.5,
+            P4: 1.5
         };
     }
 
@@ -16,14 +19,15 @@ export class Minimax {
         const hpJugador = estado.calcularTotalHPJugador();
         const coberturaIA = estado.calcularCoberturaIA();
         const amenazaJugador = estado.calcularAmenazaJugador();
+        const proximidad = estado.calcularProximidadIA();
 
-        return (this.pesos.w1 * hpIA) - (this.pesos.w2 * hpJugador) + (this.pesos.w3 * coberturaIA) - (this.pesos.w4 * amenazaJugador);
+        return (this.pesos.P1 * hpIA) 
+             - (this.pesos.P2 * hpJugador) 
+             + (this.pesos.P3 * coberturaIA) 
+             - (this.pesos.P4 * amenazaJugador)
+             + proximidad;
     }
 
-    /**
-     * NUEVO: El algoritmo principal que toma la decisión.
-     * Evalúa los movimientos posibles de la IA y elige el que tiene mayor evaluación.
-     */
     obtenerMejorMovimiento(estado, profundidad) {
         this.nodosEvaluados = 0;
         let mejorPuntaje = -Infinity;
@@ -31,7 +35,6 @@ export class Minimax {
         
         const movimientos = estado.obtenerMovimientos('IA');
 
-        // Si no hay movimientos posibles definidos aún, devuelve null
         if (movimientos.length === 0) {
             return { movimiento: null, puntaje: this.evaluarEstado(estado) };
         }
@@ -40,7 +43,6 @@ export class Minimax {
             const estadoSimulado = estado.clonar();
             estadoSimulado.aplicarMovimiento(movimiento);
             
-            // Llama al minimax recursivo para el turno del jugador (false)
             const puntaje = this.ejecutar(estadoSimulado, profundidad - 1, false);
 
             if (puntaje > mejorPuntaje) {

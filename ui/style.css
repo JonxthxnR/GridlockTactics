@@ -159,3 +159,115 @@ h1 {
     color: #a7ffeb;
     border: 2px solid #00ffcc;
 }
+
+/* Resaltados de interacción táctica */
+.casilla {
+    cursor: pointer;
+    transition: transform 0.1s, box-shadow 0.15s;
+}
+
+.casilla-seleccionada {
+    outline: 2px solid #00ffcc;
+    outline-offset: -3px;
+}
+
+.casilla-movimiento {
+    box-shadow: inset 0 0 12px rgba(0, 255, 136, 0.65);
+    border: 1px solid #00ff88;
+}
+
+.casilla-movimiento:hover {
+    background-color: rgba(0, 255, 136, 0.25);
+}
+
+.casilla-ataque {
+    box-shadow: inset 0 0 14px rgba(255, 50, 50, 0.85);
+    border: 1px solid #ff3333;
+}
+
+.casilla-ataque:hover {
+    background-color: rgba(255, 50, 50, 0.3);
+}
+
+.btn-fin-turno {
+    background-color: #1b4332;
+    border-color: #2d6a4f;
+    margin-top: 12px;
+}
+
+.btn-fin-turno:hover {
+    background-color: #2d6a4f;
+    color: #fff;
+}
+
+.log-combate {
+    max-height: 150px;
+    overflow-y: auto;
+    background: #121212;
+    border: 1px solid #3b3530;
+    padding: 8px;
+    margin-top: 10px;
+    font-size: 0.78rem;
+}
+
+.log-combate p {
+    margin: 4px 0;
+}
+
+.mira-despejada {
+    background-color: rgba(255, 204, 0, 0.25) !important;
+    outline: 1px dashed #ffcc00;
+}
+
+.mira-bloqueada {
+    background-color: rgba(255, 40, 40, 0.45) !important;
+    outline: 2px solid #ff2828;
+}
+
+@keyframes destelloDisparo {
+    0%   { background-color: #ffffff; transform: scale(1.08); }
+    50%  { background-color: #ff4444; }
+    100% { transform: scale(1); }
+}
+
+.efecto-impacto {
+    animation: destelloDisparo 0.35s ease-out;
+}
+.panel-postpartida {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #1a1817;
+    border: 2px solid #00ffcc;
+    width: 760px;
+    max-width: 95vw;
+}
+
+.resumen-kpi {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.kpi-card {
+    background-color: #121212;
+    border: 1px solid #3b3530;
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.kpi-card span {
+    font-size: 0.72rem;
+    color: #999;
+}
+
+.kpi-card strong {
+    font-size: 1.35rem;
+}
+
+.kpi-card small {
+    font-size: 0.72rem;
+    color: #bbb;
+}
